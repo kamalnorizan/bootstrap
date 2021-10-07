@@ -92,11 +92,55 @@
         </div>
     </div>
 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-name="Kamal">
+      Launch demo modal 1
+    </button>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-name="Zain">
+      Launch demo modal 2
+    </button>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-name="Akmal">
+      Launch demo modal 3
+    </button>
+
+    <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Modal title</h5>
+            <button type="button" class="btn btn-light" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="myInput">My Input</label>
+              <input type="text" class="form-control" name="myInput" id="myInput" aria-describedby="helpId" placeholder="">
+            </div>
+          </div>
+           <div class="modal-footer">
+               <button class="btn btn-info" data-bs-dismiss="modal">Close</button>
+           </div>
+        </div>
+      </div>
+    </div>
+    
+     
+
 <script src="assets/js/jquery-3.6.0.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/sweetalert.min.js"></script>
 
 <script>
+
+    $('#myModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var nama = button.data('name');
+
+            $('#myInput').val(nama);
+    });
+
     $('#testSweetalert').click(function (e) { 
         e.preventDefault();
         swal({
@@ -129,9 +173,7 @@
         });
     });
     
-    swal({
-        text: 'Test, Hello',
-    });
+    
 </script>
 
 </body>
