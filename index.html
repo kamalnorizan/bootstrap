@@ -44,6 +44,7 @@
                     <h6 class="card-subtitle mb-2 text-muted ">Card subtitle</h6>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     b5
+                    <button class="btn btn-primary" type="button" id="loadAjax">Load Ajax </button>
                   </div>
                 </div>
             </div>
@@ -118,6 +119,7 @@
               <label for="myInput">My Input</label>
               <input type="text" class="form-control" name="myInput" id="myInput" aria-describedby="helpId" placeholder="">
             </div>
+            <div id="info"></div>
           </div>
            <div class="modal-footer">
                <button class="btn btn-info" data-bs-dismiss="modal">Close</button>
@@ -135,10 +137,26 @@
 <script>
 
     $('#myModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var nama = button.data('name');
+        var button = $(event.relatedTarget);
+        var nama = button.data('name');
+        $('#loadAjax').click();
+        $('#myInput').val(nama);
+       
+    });
 
-            $('#myInput').val(nama);
+    $('#loadAjax').click(function (e) { 
+        e.preventDefault();
+        $.ajax({
+            type: "get",
+            url: "https://api.sampleapis.com/codingresources/codingResources",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $.each(response, function (indexInArray, valueOfElement) { 
+                     $('#info').append(valueOfElement.description+'<br>')
+                });
+            }
+        });
     });
 
     $('#testSweetalert').click(function (e) { 
