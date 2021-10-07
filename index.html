@@ -28,7 +28,7 @@
     <div class="container-lg mt-5">
         <div class="row">
             <div class="col-md-4">
-                <div class="card" >
+                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Card title 1</h5>
                         <h6 class="card-subtitle mb-2 text-muted ">Card subtitle</h6>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" id="sebelah">
                 <div class="card" >
                   <div class="card-body">
                     <h5 class="card-title">Card title2</h5>
@@ -92,8 +92,6 @@
         </div>
     </div>
 
-
-
 <script src="assets/js/jquery-3.6.0.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/sweetalert.min.js"></script>
@@ -102,8 +100,37 @@
     $('#testSweetalert').click(function (e) { 
         e.preventDefault();
         swal({
+            title: 'Are you sure??',
             text: 'Test, Hello',
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: 'Batal',
+                    visible: true,
+                    value: 1
+                },
+                confirm:{
+                    text: 'Setuju',
+                    visible: true,
+                    value: 2
+                }
+            }
+        }).then((value)=>{
+            if(value==2){
+                swal("You clicked SETUJU",{
+                    icon:'success',
+                });
+            }else{
+                swal("You clicked CANCEL",{
+                    dangerMode: true,
+                    icon:'error',
+                });
+            }
         });
+    });
+    
+    swal({
+        text: 'Test, Hello',
     });
 </script>
 
