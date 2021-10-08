@@ -51,8 +51,9 @@
         loadData();
     });
 
-    $(document).on('click','.deleteBtn', function(){
-        var elementtodelete = $(this).parent().parent().parent();
+    $(document).on('click','.deleteBtn',function(){
+        var button = $(this);
+        var id = button.attr('data-id');
         swal({
             title: "Are you sure?",
             text: "You will not be able to recover this demand point again!",
@@ -72,8 +73,20 @@
                 closeModal: true
             }}
         }).then((value)=>{
-            if(value){
-                $(elementtodelete).remove();
+            // alert(value);
+            if(value==true){
+                $.ajax({
+                    type: "DELETE",
+                    url: "https://jsonplaceholder.typicode.com/posts/"+id,
+                    data: {
+                       
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        $(button).parent().parent().parent().remove();
+                        swal("Deleted!", "The post has been deleted successfully.", "success");
+                    }
+                });
             }
         });
     });
@@ -81,43 +94,25 @@
     $(document).on('dblclick','.canedit', function(){
         $(this).html(
             '<div class="form-group">'+
-               ' <input type="text" value="'+$(this).html()+'" class="form-control editP" name="" id=""  aria-describedby="helpId" placeholder="">'+
+                ' <textarea class="form-control" value="'+$(this).html()+'" rows="3"></textarea>'+
             '</div>'
         )
-    });
-    
-    $(document).on('blur','.editP', function(){
-        var selected = $(this);
-        $(selected).parent().parent().html($(this).val());
-        /*$.ajax({
-            type: "post",
-            url: "{{ route('updateTitle') }}",
-            data: {
-                _token: '{{ csrf_token() }}',
-                data: $(this).val(),
-            },
-            dataType: "json",
-            success: function (response) {
-                $(selected).parent().parent().html(response);
-            }
-        });*/
     });
     
     function loadData(){
         $.ajax({
             type: "get",
-            url: "https://api.sampleapis.com/codingresources/codingResources",
+            url: "https://jsonplaceholder.typicode.com/posts",
             dataType: "json",
             success: function (response) {
-                $.each(response, function (indexInArray, tutorial) { 
+                $.each(response, function (indexInArray, post) { 
                     $('#contentRow').append(
                         '<div class="col-md-4 mt-3">'+
                             '<div class="card">'+
                                 '<div class="card-body">'+
-                                  '<h5 class="card-title">Tutorial '+tutorial.id+'</h5>'+
-                                  '<p class="card-text canedit">'+tutorial.description+'</p>'+
-                                  '<a href="'+tutorial.url+'" target="_blank" class="btn btn-primary">View Detail</a>'+
-                                  '<button class="btn btn-danger deleteBtn">Delete</button>'+
+                                  '<h5 class="card-title">'+post.title+'</h5>'+
+                                  '<p class="card-text canedit">'+post.body+'</p>'+
+                                  '<button class="btn btn-danger deleteBtn" data-id="'+post.id+'">Delete</button>'+
                                 '</div>'+
                             '</div>'+
                         '</div>'
