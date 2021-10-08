@@ -30,6 +30,10 @@
         </div>
     </nav>
     <div class="container-lg mt-5">
+        <div class="row" id="contentRow">
+            
+        </div>
+        
         
     </div>
 </div>
@@ -51,7 +55,17 @@
             url: "https://api.sampleapis.com/codingresources/codingResources",
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                $('#contentRow').append(
+                    '<div class="col-md-4 mt-3">'+
+                        '<div class="card">'+
+                            '<div class="card-body">'+
+                              '<h5 class="card-title">Tutorial</h5>'+
+                              '<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>'+
+                              '<a href="#" class="btn btn-primary">View Detail</a>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'
+                );
             }
         });
     }
