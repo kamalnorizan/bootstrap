@@ -92,12 +92,23 @@
     });
 
     $(document).on('dblclick','.canedit', function(){
+        var p = $(this);
+        var id = p.attr('data-id');
         $(this).html(
             '<div class="form-group">'+
-                ' <textarea class="form-control" value="'+$(this).html()+'" rows="3"></textarea>'+
+                ' <textarea class="form-control txtarea" data-id="'+id+'" rows="3">'+$(this).html()+'</textarea>'+
             '</div>'
         )
     });
+   
+    $(document).on('blur','.txtarea', function(){
+        var txtarea = $(this);
+        var id = txtarea.attr('data-id');
+        alert(id);
+        $(this).parent().parent().html($(this).val());
+    });
+
+
     
     function loadData(){
         $.ajax({
@@ -111,7 +122,7 @@
                             '<div class="card">'+
                                 '<div class="card-body">'+
                                   '<h5 class="card-title">'+post.title+'</h5>'+
-                                  '<p class="card-text canedit">'+post.body+'</p>'+
+                                  '<p data-id="'+post.id+'" class="card-text canedit">'+post.body+'</p>'+
                                   '<button class="btn btn-danger deleteBtn" data-id="'+post.id+'">Delete</button>'+
                                 '</div>'+
                             '</div>'+
