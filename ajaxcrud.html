@@ -104,8 +104,21 @@
     $(document).on('blur','.txtarea', function(){
         var txtarea = $(this);
         var id = txtarea.attr('data-id');
-        alert(id);
-        $(this).parent().parent().html($(this).val());
+        var p = $(this).parent().parent();
+        var value = $(this).val();
+        console.log($(this));
+        $.ajax({
+            type: "PUT",
+            url: "https://jsonplaceholder.typicode.com/posts/"+id,
+            data: {
+                body: value 
+            },
+            dataType: "json",
+            success: function (response) {
+                console.log($(this));
+                p.html(value);
+            }
+        });
     });
 
 
