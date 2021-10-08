@@ -31,11 +31,12 @@
     </nav>
     <div class="container-lg mt-5">
         <div class="row" id="contentRow">
-            
+            <button class="btn btn-danger deleteBtn">Delete</button>
+            <button class="btn btn-danger deleteBtn">Delete</button>
+            <button class="btn btn-danger deleteBtn">Delete</button>
         </div>
-        
-        
     </div>
+    
 </div>
     
      
@@ -47,6 +48,34 @@
 <script>
     $(document).ready(function () {
         loadData();
+    });
+
+    $(document).on('click','.deleteBtn', function(){
+        alert('test');
+    });
+
+    $(document).on('dblclick','p', function(){
+        $(this).html(
+            '<div class="form-group">'+
+               ' <input type="text" value="'+$(this).html()+'" class="form-control editP" name="" id=""  aria-describedby="helpId" placeholder="">'+
+            '</div>'
+        )
+    });
+
+    $(document).on('blur','.editP', function(){
+        var selected = $(this);
+        $.ajax({
+            type: "post",
+            url: "{{ route('updateTitle') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                data: $(this).val(),
+            },
+            dataType: "json",
+            success: function (response) {
+                $(selected).parent().parent().html(response);
+            }
+        });
     });
     
     function loadData(){
@@ -63,13 +92,25 @@
                                   '<h5 class="card-title">Tutorial '+tutorial.id+'</h5>'+
                                   '<p class="card-text">'+tutorial.description+'</p>'+
                                   '<a href="'+tutorial.url+'" target="_blank" class="btn btn-primary">View Detail</a>'+
+                                  '<button class="btn btn-danger deleteBtn">Delete</button>'+
                                 '</div>'+
                             '</div>'+
                         '</div>'
                     );
                 });
-
-               
+                /*$.each(response, function (indexInArray, tutorial) { 
+                    $('#contentRow').append(
+                        '<div class="col-md-4 mt-3">'+
+                            '<div class="card">'+
+                                '<div class="card-body">'+
+                                  '<h5 class="card-title">Tutorial '+tutorial.id+'</h5>'+
+                                  '<p class="card-text">'+tutorial.description+'</p>'+
+                                  '<a href="'+tutorial.url+'" target="_blank" class="btn btn-primary">View Detail</a>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'
+                    );
+                });*/
             }
         });
     }
